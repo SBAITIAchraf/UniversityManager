@@ -8,19 +8,30 @@ class Controller
         $this->m = new Model();
     }
 
-    #l'action qui envoie vers la page home
+    #l'action qui renvoie vers la page home
     public function homeAction()
     {
-        include 'view.classe.php';
+        include 'views/base.view.php';
     }
 
+    public function showAllEtudiantActiuon()
+    {
+        $etudiants = $this->m->getAllEtudiants();
+        $content = 'views/showAllEtudiant.view.php';
+        include 'views/base.view.php';
+    }
     #La fonction qui controlle toutes les actions
     public function action()
     {
         $action = "home";
+        if (isset($_GET['action']))
+        {
+            $action = $_GET['action'];
+        }
         switch( $action )
         {
-            case "home": $this->homeAction(); break;
+            case 'home': $this->homeAction(); break;
+            case 'showAllEtudiants': $this->showAllEtudiantActiuon(); break;
         }
     }
 }

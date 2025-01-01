@@ -1,0 +1,9 @@
+CREATE TABLE administrateur(login varchar(100) PRIMARY KEY,nom varchar(100),prenom varchar(100),CONSTRAINT fkUser FOREIGN KEY(login) REFERENCES utilisateur(login));
+CREATE TABLE utilisateur(login varchar(100) PRIMARY KEY,PASSWORD varchar(1000),type ENUM('ADMIN','STUD','PROF'));
+CREATE TABLE professeur(login varchar(100) PRIMARY KEY,nom varchar(100),prenom varchar(100),departement varchar(100),Constraint fkUserPrf FOREIGN KEY(login) REFERENCES utilisateur(login));
+CREATE TABLE etudiant(login varchar(100) PRIMARY KEY,nom varchar(100),prenom varchar(100),departement varchar(100),filiere varchar(100),classe varchar(100),CONSTRAINT fkUserStd FOREIGN KEY(login) REFERENCES utilisateur(login));   
+CREATE TABLE cours(id int(11) PRIMARY KEY AUTO_INCREMENT,titre varchar(200),designation text,prof varchar(100),FOREIGN KEY (prof) REFERENCES professeur(login));
+CREATE TABLE note(prof varchar(100) PRIMARY KEY,etudiant varchar(100) PRIMARY KEY,cours varchar(100)PRIMARY KEY,note float,date DATETIME DEFAULT CURRENT_TIMESTAMP,CONSTRAINT dkStdfNote FOREIGN KEY (etudiant) REFERENCES etudiant(login),CONSTRAINT dkCrsNote FOREIGN KEY (cours) REFERENCES cours(id),CONSTRAINT dkProfNote FOREIGN KEY(prof) REFERENCES professeur(login));
+CREATE TABLE test(id int(11) AUTO_INCREMENT PRIMARY KEY,time_limit int(11),note_total float,prof varchar(100),CONSTRAINT fkProfTst FOREIGN KEY(prof) REFERENCES professeur(login));
+CREATE TABLE question(id int(11) PRIMARY KEY AUTO_INCREMENT,test int(11),contenue text,reponse text,not_total float, CONSTRAINT fkTstQst FOREIGN KEY(test) REFERENCES test(id));
+CREATE TABLE reponse(id int(11) PRIMARY KEY AUTO_INCREMENT,contenue text,note float,question int(11),etudiant varchar(100),CONSTRAINT fkQstRps FOREIGN KEY(question) REFERENCES question(id),CONSTRAINT fkStdRps FOREIGN KEY(etudiant) REFERENCES etudiant(login));
