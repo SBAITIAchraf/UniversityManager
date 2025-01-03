@@ -15,6 +15,11 @@ class Controller
         include 'views/base.view.php';
     }
 
+    #L'action de login et sign-up
+    public function loginSignUpAction()
+    {
+        include 'views/login.signup.view.php';
+    }
     public function showAllEtudiantActiuon()
     {
         $etudiants = $this->m->getAllEtudiants();
@@ -82,6 +87,7 @@ class Controller
         switch( $action )
         {
             case 'home': $this->homeAction(); break;
+            case 'loginSignUp': $this->loginSignUpAction(); break;
             case 'Addprofil':$this->AddUser();break;
             case 'show':$this->showProfiles();break;
             case 'showAllEtudiants': $this->showAllEtudiantActiuon(); break;

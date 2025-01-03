@@ -2,82 +2,45 @@
 <!DOCTYPE html>
 <html>
     <head>
-
         <meta charset="utf-8">
         <title>UnivManager</title>
-        <link rel="stylesheet" type="text/css" href="style1.css">
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-        <style>
-            .extra-fields {
-                display: none; 
-                margin-top: 10px;
-            }
-        </style>
+
+        <!--Se connecter au fishiers css-->
+        <link rel="stylesheet" href="../CSS/base.style.css?<?php echo time()?>">
     </head>
-    
     <body>
-        <div class="main">
-            <input type="checkbox" id="chk" aria-hidden="true">
-
-            <div class="signup">
-                <form id="signupForm" action="ctrller.php"?action=AddUser  method="POST">
-                    <label for="chk" aria-hidden="true">Sign up</label>
-                    <input type="text" name="nom" placeholder="Nom">
-                    <input type="text" name="prenom" placeholder="Prénom">
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Password" required="">
-
-              
-                    <select id="status" name="statut" required="">
-                        <option value="" placeholder="statut" disabled selected> Choisir le statut </option>
-                        <option value="ADMIN">Administrateur</option>
-                        <option value="PROF">Professeur</option>
-                        <option value="STUD">Étudiant</option>
-                    </select>
-
-              
-                    <div id="studentFields" class="extra-fields">
-                        <input type="text" name="filiere" placeholder="Filière">
-                        <input type="text" name="classe" placeholder="Classe">
-                        <input type="file" name="photo" accept="image/*" placeholder="Photo de profil">
-                    </div>
-
-                    <div id="professorFields" class="extra-fields">
-                        <input type="text" name="departement" placeholder="Département">
-                        <input type="file" name="photo" accept="image/*" placeholder="Photo de profil">
-                    </div>
-
-                    <button>Sign up</button>
-                </form>
+    <nav class="nav_bar">
+            <a>
+                <div class="logo-container">LOGO</div>
+                <!--<img class="logo" src="{%static 'images/ASW-LOGO.png'%}">-->
+            </a>
+            <div class="nav-tools">
+            <ul style="list-style: none;">
+                <li>
+                    <a>
+                        <button>Logout</button>
+                    </a>
+                </li>
+                <li>
+                    <a>
+                        <button>Login</button>
+                    </a>
+                </li>
+            </ul>
             </div>
-
-            <div class="login">
-                <form   action="ctrller.php"?action=show  method="POST" >
-                    <label for="chk" aria-hidden="true">Login</label>
-                    <input type="email" name="email" placeholder="Email" required="">
-                    <input type="password" name="pswd" placeholder="Password" required="">
-                    <button>Login</button>
-                </form>
-            </div>
-        </div>
-
-        <script>
-       
-            document.getElementById('status').addEventListener('change', function () {
-                const selectedStatus = this.value;
-                const studentFields = document.getElementById('studentFields');
-                const professorFields = document.getElementById('professorFields');
-
-                studentFields.style.display = 'none';
-                professorFields.style.display = 'none';
-
-                if (selectedStatus === 'Étudiant') {
-                    studentFields.style.display = 'block';
-                } else if (selectedStatus === 'Professeur') {
-                    professorFields.style.display = 'block';
+        </nav>
+        <div class="content-container">
+            <?php
+                if (isset($content))
+                {
+                    include $content;
                 }
-            });
-        </script>
+            ?>
+        </div>
     </body>
+    <footer>
+        
+    </footer>
 </html>
 
+<?php
