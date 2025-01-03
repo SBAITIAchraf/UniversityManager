@@ -11,8 +11,8 @@
     <body>
     <nav class="nav_bar">
             <a>
-                <div class="logo-container">LOGO</div>
-                <!--<img class="logo" src="{%static 'images/ASW-LOGO.png'%}">-->
+                <div class="logo-container"></div>
+               <img class="logo" src="../Imgs/UM6P.jpg">
             </a>
             <div class="nav-tools">
             <ul style="list-style: none;">
