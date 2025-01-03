@@ -13,7 +13,7 @@ body{
     height: 660px;
     background: red;
     overflow: hidden;
-    background: url("1.jpg") no-repeat center / cover;
+    background: url("../Imgs/1.jpg") no-repeat center / cover;
     border-radius: 10px;
     box-shadow: 5px 20px 50px #000;
 }
@@ -33,7 +33,7 @@ body{
 }
 
 label{
-    color: #fff;
+    color: #973606;
     font-size: 2.3em;
     justify-content: center;
     display: flex;
@@ -44,7 +44,6 @@ label{
 }
 input,select{
     width: 200px;
-    height: 20px;
     background: #e0dede;
     justify-content: center;
     display:flex;
@@ -52,6 +51,10 @@ input,select{
     padding: 10px;
     border: none;
     border-radius: 5px;
+}
+input
+{
+    height: 20px;
 }
 button{
     width: 100px;
