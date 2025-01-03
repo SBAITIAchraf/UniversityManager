@@ -88,6 +88,7 @@ class Controller
         }
     }
 }
+
 $c = new Controller();
 $c->action();
 ?>
