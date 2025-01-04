@@ -7,3 +7,9 @@ CREATE TABLE note(prof varchar(100) PRIMARY KEY,etudiant varchar(100) PRIMARY KE
 CREATE TABLE test(id int(11) AUTO_INCREMENT PRIMARY KEY,time_limit int(11),note_total float,prof varchar(100),CONSTRAINT fkProfTst FOREIGN KEY(prof) REFERENCES professeur(login));
 CREATE TABLE question(id int(11) PRIMARY KEY AUTO_INCREMENT,test int(11),contenue text,reponse text,not_total float, CONSTRAINT fkTstQst FOREIGN KEY(test) REFERENCES test(id));
 CREATE TABLE reponse(id int(11) PRIMARY KEY AUTO_INCREMENT,contenue text,note float,question int(11),etudiant varchar(100),CONSTRAINT fkQstRps FOREIGN KEY(question) REFERENCES question(id),CONSTRAINT fkStdRps FOREIGN KEY(etudiant) REFERENCES etudiant(login));
+
+
+ALTER table utilisateur add (nom varchar(100),prenom varchar(100));
+ALTER table professeur drop column nom , drop column prenom;
+ALTER table etudiant drop column nom , drop column prenom;
+
