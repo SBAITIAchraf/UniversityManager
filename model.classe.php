@@ -1,7 +1,7 @@
 <?php
 class Model
 {
-    private $db;
+    public $db;
     public function __construct()
     {
         define("USER","root");
@@ -9,17 +9,54 @@ class Model
         $this->db = new PDO("mysql:host=localhost; dbname=univmanager", USER, PASS);
     }
     
-    public function getAllEtudiants()
+    public function getUsers($type = "ALL" ,$filter = null)
     {
-        $query = "select * from etudiant";
-        $prepQuery = $this->db->prepare($query);
-        $prepQuery->execute();
-        return $prepQuery->fetchAll(PDO::FETCH_ASSOC);
+        $table = "";
+        if ($type == "ALL")
+        {
+            $table = "utilisateur";
+        }
+        elseif ($type == "STUD")
+        {
+            $table = "etudiant";
+        }
+        elseif ($type == "PROF")
+        {
+            $table = "professeur";
+        }
+        elseif ($type == "ADMIN")
+        {
+            $table = "admin";
+        }
+        if ($filter == null)
+        {
+            $query = "select * from " .$table;
+            $prepQuery = $this->db->prepare($query);
+            $prepQuery->execute();
+            return $prepQuery->fetchAll(PDO::FETCH_ASSOC);
+        }
+        # Fair select avec des un filtre
+        else
+        {
+            $query_filter = "";
+            $counter = 0;
+
+            foreach($filter as $colum => $value)
+            {
+                if ($counter != 0) $query_filter .= " and ";
+                $query_filter .= $colum . "=" .$value;
+                $counter += 1;
+            }
+
+            $query = "select * from " .$table ." where " .$query_filter;
+            
+            return $this->db->query($query, PDO::FETCH_ASSOC);
+        }
     }
 
     /* ajouter fonction d'ajout d'un profil */
     public function AddUser($user){
-        $query=$this->db->prepare("Insert into utilisateur values(?,?,?)");
+        $query=$this->db->prepare("Insert into utilisateur values(?,?,?, NULL)");
         $query->execute($user);
     }
     public function AddAdmin($user){

@@ -21,14 +21,13 @@ class Controller
         include 'views/login.signup.view.php';
     }
 
-    public function AddUser(){
+    public function AddUserAction(){
         $profil=array($_POST['email'],$_POST['pswd'],$_POST['statut']);
         $prof=array($_POST['email'],$_POST['nom'],$_POST['prenom'],$_POST['departement']);
         $admin=array($_POST['email'],$_POST['nom'],$_POST['prenom']);
         $student=array($_POST['email'],$_POST['nom'],$_POST['prenom'],$_POST['departement'],$_POST['filiere'],$_POST['classe']);
 
         $this->m->AddUser($profil);
-
         $statut=$_POST['statut'];
 
         switch ($statut) {
@@ -71,6 +70,10 @@ class Controller
     # Admin actions
     public function showAllProfilesAction()
     {
+        $etudiants = $this->m->getUsers('ALL', array("type" => "'STUD'"));
+        $professeurs = $this->m->getUsers('ALL', array("type" => "'PROF'"));
+        $admins = $this->m->getUsers('ALL', array("type" => "'ADMIN'"));
+        
         $styles = array('cardSlider.css');
         $scripts = array('slider.js');
         $content = 'views/admin/showAllProfiles.view.php';
@@ -90,7 +93,7 @@ class Controller
         {
             case 'home': $this->homeAction(); break;
             case 'loginSignUp': $this->loginSignUpAction(); break;
-            case 'Addprofil':$this->AddUser();break;
+            case 'Addprofil':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
 
             #Admin views action
