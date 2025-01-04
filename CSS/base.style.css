@@ -18,13 +18,7 @@ body
 {
     font-family:'Quicksand', sans-serif;
     background-color: var(--bkg_color);
-    text-wrap: nowrap;
     min-height: 100vh;
-    background-attachment: fixed;
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-size:cover;
-    background-position: center;
 }
 .nav_bar
 {
@@ -94,6 +88,7 @@ button
     border: 2px solid;
     outline: none;
     font-weight:bold;
+    font-size: 20px;
     padding: 10px 30px;
     cursor: pointer;
     border-color: var(--button-base-color);

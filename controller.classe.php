@@ -20,12 +20,6 @@ class Controller
     {
         include 'views/login.signup.view.php';
     }
-    public function showAllEtudiantActiuon()
-    {
-        $etudiants = $this->m->getAllEtudiants();
-        include 'views/showAllEtudiant.view.php';
-        include 'views/base.view.php';
-    }   
 
     public function AddUser(){
         $profil=array($_POST['email'],$_POST['pswd'],$_POST['statut']);
@@ -74,6 +68,14 @@ class Controller
         }
     }
 
+    # Admin actions
+    public function showAllProfilesAction()
+    {
+        $styles = array('cardSlider.css');
+        $scripts = array('slider.js');
+        $content = 'views/admin/showAllProfiles.view.php';
+        include 'views/base.view.php';
+    }
 
 
     #La fonction qui controlle toutes les actions
@@ -90,7 +92,9 @@ class Controller
             case 'loginSignUp': $this->loginSignUpAction(); break;
             case 'Addprofil':$this->AddUser();break;
             case 'show':$this->showProfiles();break;
-            case 'showAllEtudiants': $this->showAllEtudiantActiuon(); break;
+
+            #Admin views action
+            case 'showAllProfiles': $this->showAllProfilesAction(); break;
         }
     }
 }

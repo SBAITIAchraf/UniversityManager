@@ -1,0 +1,146 @@
+.container
+{
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 0 10px #DDD;
+    border-radius: 25px;
+    padding: 20px 15px;
+}
+.slide-container
+{
+    padding: 30px 50px;
+    width: 100%;
+    background-color: #FFF;
+    box-shadow: 0 0 10px #DDD;
+    border-radius: 30px;
+    position: relative;
+}
+.card-list
+{
+    padding-left: 0;
+}
+.card
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 250px;
+}
+.card .card-link
+{
+    border-radius: 25px;
+    background-color: #FFF;
+    max-width: 200px;
+    width:200px;
+    display: block;
+    overflow: hidden;
+    box-shadow: 0 0 10px #DDD;
+}
+.image-content
+{
+    position: relative;
+    background-color: var(--base-color);
+    padding: 10px 0;
+    border-radius: 25px 25px 0px 25px;
+}
+.image-content, .card-content
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.card-image
+{
+    height: 150px;
+    width:150px;
+    border-radius: 50%;
+    padding: 3px;
+    background-color: #FFF;
+}
+.image-content::before
+{
+    position: absolute;
+    content: '';
+    right:0;
+    bottom: -25px;
+    width: 25px;
+    height: 25px;
+}
+.image-content::after
+{
+    position: absolute;
+    content: '';
+    right:0;
+    bottom: -40px;
+    width: 40px;
+    height: 40px;
+}
+.image-content::before
+{
+    background-color: var(--base-color);
+}
+.image-content::after
+{
+    border-radius: 0 25px 0 0;
+    background-color: var(--bkg_color);
+}
+.card-image .image-wrapper
+{
+    height: 100%;
+    width: 100%;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid var(--base-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.image-wrapper .card-img
+{
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+.card-content
+{
+    text-align: center;
+    padding: 10px 14px;
+    color: #121212;
+    transition: 150ms ease-in-out;
+}
+.card:hover .card-content
+{
+    color: var(--base-color);
+}
+.prenom
+{
+    text-transform: uppercase;
+    display: block;
+}
+.nom
+{
+    margin: 5px 0;
+}
+.card button
+{
+    border-radius: 0;
+}
+.left-bar, .right-bar
+{
+    position: absolute;
+    width: 50px;
+    height: 100%;
+    z-index: 1;
+}
+.left-bar
+{
+    left: 0;
+    top: 0;
+    background: linear-gradient(to right, #c9c9c9, transparent);
+}
+.right-bar
+{
+    right: 0;
+    top: 0;
+    background: linear-gradient(to left, #c9c9c9, transparent);
+}
