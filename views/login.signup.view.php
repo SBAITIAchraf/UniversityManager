@@ -5,7 +5,7 @@
 
         <meta charset="utf-8">
         <title>UnivManager</title>
-        <link rel="stylesheet" type="text/css" href="../CSS/style1.css">
+        <link rel="stylesheet" type="text/css" href="../CSS/style1.css?<?php echo time()?>">
         <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
         <style>
             .extra-fields {
@@ -20,7 +20,8 @@
             <input type="checkbox" id="chk" aria-hidden="true">
 
             <div class="signup">
-                <form id="signupForm" action="../controller.classe.php?action=AddUser"  method="POST" enctype="multipart/form-data">
+
+                <form id="signupForm" action="../controller.classe.php/?action=Addprofil"  method="post">
                     <label for="chk" aria-hidden="true">Sign up</label>
                     <input type="text" name="nom" placeholder="Nom">
                     <input type="text" name="prenom" placeholder="Prénom">
