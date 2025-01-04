@@ -20,6 +20,7 @@ class Controller
     {
         include 'views/login.signup.view.php';
     }
+
     public function showAllEtudiantActiuon()
     {
         $etudiants = $this->m->getAllEtudiants();
@@ -28,6 +29,9 @@ class Controller
     }   
 
     public function AddUser(){
+
+        $nom = $_POST['nom'];
+        $prenom = $_POST['prenom'];
         $profil=array($_POST['email'],$_POST['pswd'],$_POST['statut']);
         $prof=array($_POST['email'],$_POST['nom'],$_POST['prenom'],$_POST['departement']);
         $admin=array($_POST['email'],$_POST['nom'],$_POST['prenom']);
@@ -37,6 +41,14 @@ class Controller
 
         $statut=$_POST['statut'];
 
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $fileTmpPath = $_FILES['photo']['tmp_name'];
+            $fileType = $_FILES['photo']['type'];
+            $newFileName = $nom . '_' . $prenom . '.jpg';
+            $uploadFileDir = __DIR__ . '/Imgs/';
+            $destPath = $uploadFileDir . $newFileName;
+
+        }
         switch ($statut) {
             case 'ADMIN':
                 $this->m->AddAdmin($admin);
@@ -52,6 +64,7 @@ class Controller
                 $message = "Étudiant ajouté avec succès.";
                 break;
     }
+
             header('location:controller.class.php');
 }
 
@@ -68,8 +81,13 @@ class Controller
             case 'ADMIN':
                 /**/              
             case 'STUD':
-                /**/
-            case 'PROF':
+               include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+               $result=$this->m->GetNoteStudent($log);
+               include 'views/etudiant/showNotes.php';
+               
+
+            
+               case 'PROF':
                  /**/
         }
     }

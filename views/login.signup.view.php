@@ -20,7 +20,7 @@
             <input type="checkbox" id="chk" aria-hidden="true">
 
             <div class="signup">
-                <form id="signupForm" action="../controller.classe.php?action=AddUser"  method="POST">
+                <form id="signupForm" action="../controller.classe.php?action=AddUser"  method="POST" enctype="multipart/form-data">
                     <label for="chk" aria-hidden="true">Sign up</label>
                     <input type="text" name="nom" placeholder="Nom">
                     <input type="text" name="prenom" placeholder="Prénom">
