@@ -18,6 +18,8 @@ class Controller
     #L'action de login et sign-up
     public function loginSignUpAction()
     {
+        $styles = array('style1.css');
+        $content = 'views/admin/showAllProfiles.view.php';
         include 'views/login.signup.view.php';
     }
 
@@ -41,6 +43,7 @@ class Controller
             $destPath = $uploadFileDir . $newFileName;
 
         }
+
         switch ($statut) {
             case 'ADMIN':
                 $this->m->AddAdmin($admin);
@@ -74,13 +77,12 @@ class Controller
             case 'ADMIN':
                 /**/              
             case 'STUD':
-               include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
-               //$result=$this->m->GetNoteStudent($log);
-               //include 'views/etudiant/showNotes.php';
-               
-
-            
-               case 'PROF':
+                $result=$this->m->GetInfoStudent($log);
+                $styles = array('StyleInfos.css');
+                $content='views/etudiant/showInfos.view.php';
+                    /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+                break;
+            case 'PROF':
                  /**/
         }
     }
@@ -104,6 +106,13 @@ class Controller
         $content = 'views/admin/showAllOfType.view.php';
         include 'views/base.view.php';
     }
+    public function showGradesEtudiantAction(){
+        $var1 = $_GET['var1'];
+        $result=$this->m->GetNoteStudent($var1);
+        $styles=array('styletable.css');
+        $content = 'views/etudiant/showNotes.view.php';
+        include 'views/base.view.php';
+    }
 
 
     #La fonction qui controlle toutes les actions
@@ -120,6 +129,7 @@ class Controller
             case 'loginSignUp': $this->loginSignUpAction(); break;
             case 'Addprofil':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
+            case'GradesStudent' :$this->showGradesEtudiantAction();break;
 
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;

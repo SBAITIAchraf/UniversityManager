@@ -104,6 +104,7 @@ class Model
 
         $query=$this->db->prepare("SELECT nom,prenom,departement,filiere,classe FROM etudiant where login= :login");
         $query->bindParam(':login',$stud,PDO::PARAM_STR );
+        $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
