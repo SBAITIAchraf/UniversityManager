@@ -43,6 +43,7 @@ class Controller
             $destPath = $uploadFileDir . $newFileName;
 
         }
+
         switch ($statut) {
             case 'ADMIN':
                 $this->m->AddAdmin($admin);
@@ -76,7 +77,9 @@ class Controller
                 /**/              
             case 'STUD':
                 $result=$this->m->GetInfoStudent($log);
-                include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+                $styles = array('StyleInfos.css');
+                $content='views/etudiant/showInfos.view.php';
+                    /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
                 break;
             case 'PROF':
                  /**/
@@ -96,6 +99,14 @@ class Controller
         include 'views/base.view.php';
     }
 
+    public function showGradesEtudiantAction(){
+        $var1 = $_GET['var1'];
+        $result=$this->m->GetNoteStudent($var1);
+        $styles=array('styletable.css');
+        $content = 'views/etudiant/showNotes.view.php';
+        include 'views/base.view.php';
+    }
+
 
     #La fonction qui controlle toutes les actions
     public function action()
@@ -111,6 +122,7 @@ class Controller
             case 'loginSignUp': $this->loginSignUpAction(); break;
             case 'Addprofil':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
+            case'GradesStudent' :$this->showGradesEtudiantAction();break;
 
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;

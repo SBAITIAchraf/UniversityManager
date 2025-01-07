@@ -6,7 +6,7 @@ class Model
     {
         define("USER","root");
         define("PASS","");
-        $this->db = new PDO("mysql:host=localhost; dbname=univmanager", USER, PASS);
+        $this->db = new PDO("mysql:host=localhost; dbname=univmanager;port=3307", USER, PASS);
     }
     
     public function getUsers($type = "ALL" ,$filter = null)
@@ -104,6 +104,7 @@ class Model
 
         $query=$this->db->prepare("SELECT nom,prenom,departement,filiere,classe FROM etudiant where login= :login");
         $query->bindParam(':login',$stud,PDO::PARAM_STR );
+        $query->execute();
         $result = $query->fetch(PDO::FETCH_ASSOC);
         return $result;
     }
