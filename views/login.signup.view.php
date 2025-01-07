@@ -1,19 +1,12 @@
 
-<!DOCTYPE html>
-<html>
-    <head>
-
-        <meta charset="utf-8">
-        <title>UnivManager</title>
-        <link rel="stylesheet" type="text/css" href="../CSS/style1.css?<?php echo time()?>">
-        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
-        <style>
+    <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
+    <style>
             .extra-fields {
                 display: none; 
                 margin-top: 10px;
             }
-        </style>
-    </head>
+    </style>
+   
     
     <body>
         <div class="main">

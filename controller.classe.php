@@ -18,6 +18,8 @@ class Controller
     #L'action de login et sign-up
     public function loginSignUpAction()
     {
+        $styles = array('style1.css');
+        $content = 'views/admin/showAllProfiles.view.php';
         include 'views/login.signup.view.php';
     }
 
@@ -73,13 +75,10 @@ class Controller
             case 'ADMIN':
                 /**/              
             case 'STUD':
-               include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
-               $result=$this->m->GetNoteStudent($log);
-               include 'views/etudiant/showNotes.php';
-               
-
-            
-               case 'PROF':
+                $result=$this->m->GetInfoStudent($log);
+                include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+                break;
+            case 'PROF':
                  /**/
         }
     }
