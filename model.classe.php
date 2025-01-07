@@ -6,7 +6,7 @@ class Model
     {
         define("USER","root");
         define("PASS","");
-        $this->db = new PDO("mysql:host=localhost; dbname=univmanager;port=3307", USER, PASS);
+        $this->db = new PDO("mysql:host=localhost; dbname=univmanager", USER, PASS);
     }
     
     public function getUsers($type = "ALL" ,$filter = null)

@@ -1,5 +1,4 @@
 
-
 <main class="table" id="customers_table">
         <section class="table__header">
             <h1>Notes</h1>

@@ -45,7 +45,7 @@
                         </tr>
                     </table>
                     <div class="social-icons">
-                            <a href="ShowNoteEtudiant.php">Grades</a>
+                    <a href="controller.classe.php?action=GradesStudent&var1=<?= urlencode($log); ?>">Grades</a>
                     </div>
                 </div>
             </div>
