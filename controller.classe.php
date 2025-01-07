@@ -67,6 +67,7 @@ class Controller
         $log=$_POST['email'];
         $pass=$_POST['pswd'];
         $stat=$this->m->Statut($log,$pass);
+        
         switch($stat){
 
             /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
@@ -74,8 +75,8 @@ class Controller
                 /**/              
             case 'STUD':
                include 'views/etudiant/showInfos.php';     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
-               $result=$this->m->GetNoteStudent($log);
-               include 'views/etudiant/showNotes.php';
+               //$result=$this->m->GetNoteStudent($log);
+               //include 'views/etudiant/showNotes.php';
                
 
             
@@ -91,9 +92,16 @@ class Controller
         $professeurs = $this->m->getUsers('ALL', array("type" => "'PROF'"));
         $admins = $this->m->getUsers('ALL', array("type" => "'ADMIN'"));
         
-        $styles = array('cardSlider.css');
+        $styles = array('list&Slider.css');
         $scripts = array('slider.js');
         $content = 'views/admin/showAllProfiles.view.php';
+        include 'views/base.view.php';
+    }
+
+    public function showAllOfType()
+    {
+        $styles = array('list&Slider.css');
+        $content = 'views/admin/showAllOfType.view.php';
         include 'views/base.view.php';
     }
 
@@ -115,6 +123,7 @@ class Controller
 
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;
+            case 'showAllOfType': $this->showAllOfType(); break;
         }
     }
 }
