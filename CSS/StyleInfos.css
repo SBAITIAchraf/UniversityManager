@@ -23,7 +23,11 @@ html, body {
     justify-content: center;
     align-items: center;
   }
-section::before,
+  .Profil
+  {
+    position: relative;
+  }
+.Profil::before,
 .card1::before{
     content: '';
     position: absolute;
@@ -33,9 +37,9 @@ section::before,
     opacity:.8;
 }
  
-section::before{
-    top: 6%;
-    left: 75%;
+.Profil::before{
+    top: -15%;
+    left: 87%;
     background: linear-gradient(#d86834, #722003);
 }
  
@@ -113,7 +117,7 @@ section::before{
  
  
   }
-  img {
+  .profile-pic {
     border: double 5px transparent;
     border-radius: 50%;
     background-image: linear-gradient(white, white), 
@@ -124,6 +128,7 @@ section::before{
     height: 200px;
     max-width: 200px;
     margin-top: 70px;
+    object-fit: cover;
   }
    
   h2 {

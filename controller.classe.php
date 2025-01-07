@@ -18,8 +18,6 @@ class Controller
     #L'action de login et sign-up
     public function loginSignUpAction()
     {
-        $styles = array('style1.css');
-        $content = 'views/admin/showAllProfiles.view.php';
         include 'views/login.signup.view.php';
     }
 
@@ -60,7 +58,7 @@ class Controller
                 break;
     }
 
-            header('location:controller.class.php');
+            header('location:controller.classe.php');
 }
 
 
@@ -70,16 +68,14 @@ class Controller
         $log=$_POST['email'];
         $pass=$_POST['pswd'];
         $stat=$this->m->Statut($log,$pass);
-        
         switch($stat){
 
             /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
             case 'ADMIN':
-                /**/              
+                header('location: controller.classe.php?action=showAllProfiles');
+                break;            
             case 'STUD':
-                $result=$this->m->GetInfoStudent($log);
-                $styles = array('StyleInfos.css');
-                $content='views/etudiant/showInfos.view.php';
+                header('location: controller.classe.php?action=StudentInfos&log=' .$log);
                     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
                 break;
             case 'PROF':
@@ -95,7 +91,7 @@ class Controller
         $admins = $this->m->getUsers('ALL', array("type" => "'ADMIN'"));
         
         $styles = array('list&Slider.css');
-        $scripts = array('slider.js');
+        $scripts = array('slider.js');  
         $content = 'views/admin/showAllProfiles.view.php';
         include 'views/base.view.php';
     }
@@ -104,6 +100,16 @@ class Controller
     {
         $styles = array('list&Slider.css');
         $content = 'views/admin/showAllOfType.view.php';
+        include 'views/base.view.php';
+    }
+
+    #Student actions
+    public function showEtudiantInfosAction()
+    {
+        $log = $_GET["log"];
+        $result=$this->m->GetInfoStudent($log);
+        $styles = array('StyleInfos.css');
+        $content='views/etudiant/showInfos.view.php';
         include 'views/base.view.php';
     }
     public function showGradesEtudiantAction(){
@@ -129,11 +135,15 @@ class Controller
             case 'loginSignUp': $this->loginSignUpAction(); break;
             case 'Addprofil':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
-            case'GradesStudent' :$this->showGradesEtudiantAction();break;
-
+            
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;
             case 'showAllOfType': $this->showAllOfType(); break;
+            
+            #Student views actions
+            case 'StudentInfos': $this->showEtudiantInfosAction();break;
+            case'GradesStudent' :$this->showGradesEtudiantAction();break;
+
         }
     }
 }

@@ -5,14 +5,21 @@
     $departement = $result['departement'];
     $filiere = $result['filiere'];
     $classe = $result['classe'];
-    $im="../Imgs/" . $nom . "_" . $prenom . ".png";
+    if ($result['photo_profile'])
+    {
+        $im="Imgs/" .$result['photo_profile'];
+    }
+    else
+    {
+        $im="Imgs/profiel_image.png";
+    }
 }
 ?>
     <section>
         <div class="Profil">
             <div class="card">
                 <div class="left-container">
-                    <img src="<?= htmlspecialchars($im); ?>" alt="Profile pic">
+                    <img class="profile-pic" src="<?= htmlspecialchars($im); ?>" alt="Profile pic">
                     <h2 class="gradienttext"><?= htmlspecialchars($nom); ?></h2>
                     <p>Student</p>
                 </div>

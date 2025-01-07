@@ -15,16 +15,16 @@
 
                                         if (isset($etudiant["photo_profile"]))
                                         {
-                                            echo '<img src="../Imgs/' .$etudiant["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="Imgs/' .$etudiant["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>
                                     </div>
-                                </div>
+                                </div>  
 
                                 <div class="card-content">
                                     <h3 class="nom-full">' .$etudiant['prenom'] .'<span class="nom">' .$etudiant['nom'] .'</span></h3>
@@ -64,11 +64,11 @@
 
                                         if (isset($professeur["photo_profile"]))
                                         {
-                                            echo '<img src="../Imgs/' .$professeur["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="Imgs/' .$professeur["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>
@@ -113,11 +113,11 @@
 
                                         if (isset($admin["photo_profile"]))
                                         {
-                                            echo '<img src="../Imgs/' .$admin["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="Imgs/' .$admin["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>
