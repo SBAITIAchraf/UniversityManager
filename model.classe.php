@@ -78,10 +78,8 @@ class Model
         $query->bindParam(':login', $log, PDO::PARAM_STR);
         $query->bindParam(':password', $pass, PDO::PARAM_STR);
         $query->execute();
-        $type = $query->fetch(PDO::FETCH_ASSOC);
-        $statut = $query->fetchColumn();
-
-        return $statut;
+        $type = $query->fetch();
+        return $type[0];
     }
 
     public function GetNoteStudent($student)
