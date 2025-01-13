@@ -1,0 +1,90 @@
+/* Global container styles */
+.container {
+    max-width: 600px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    font-family: Arial, sans-serif;
+}
+
+/* Section title */
+.section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    color: #333;
+}
+
+/* Form group styles */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Label styles */
+label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #555;
+}
+
+/* Input styles */
+input[type="text"],
+input[type="number"],
+select {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    box-sizing: border-box;
+}
+
+input[type="text"]:read-only {
+    background-color: #e9ecef;
+}
+
+/* Select styles */
+select {
+    appearance: none;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%23666'%3E%3Cpath d='M10 12l-4-4h8z'/%3E%3C/svg%3E") no-repeat right 10px center;
+    background-size: 15px 15px;
+}
+
+/* Button styles */
+button {
+    display: inline-block;
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color:#973606;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color:#973606
+}
+
+/* Success message */
+.success-message {
+    text-align: center;
+    color: #28a745;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* Error message */
+.error-message {
+    text-align: center;
+    color: #dc3545;
+    font-size: 16px;
+    margin-bottom: 10px;
+}

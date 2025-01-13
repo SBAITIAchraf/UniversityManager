@@ -123,6 +123,58 @@ class Controller
         include 'views/base.view.php';
     }
 
+    public function showAllStudofprof(){
+
+        $log = $_GET['prof_log'];
+        $cour= $_GET['course_titre'];
+        $etudiants=$this->m->Studentincourse($cour);
+        $styles = array('list&Slider.css');
+        $scripts = array('slider.js');  
+        $content='views/prof/showStudents.view.php';
+        include 'views/base.view.php';
+
+    }
+
+
+
+    public function InsertMark(){
+        $prof =$_GET['prof_log'];
+        $course = $_GET['course_titre'];
+        $etudiant=$_GET['student_log'];
+        $styles = array('stylenote.css');  
+        $content = 'views/prof/insertNotes.view.php';
+        include 'views/base.view.php';
+        
+    }
+
+    public function saveMark(){
+    
+    $studentLog = $_POST['student_log']; 
+    $profLog = $_POST['prof_log'];           
+    $note = $_POST['note'];  
+    $cours= $_POST['cours'];       
+
+
+    $result = $this->m->insertNote($studentLog, $profLog, $note,$cours);
+
+    if ($result) {                                                                                                       
+        header("Location: controller.classe.php?action=AllStudent&prof_log=" . urlencode($profLog) . "&course_titre=" . urlencode($cours) . "&success=1");
+
+    }
+
+    }
+
+    public function ShowCourses(){
+
+        $log=$_GET['log'];
+        $courses=$this->m->GetcoursesProf($log);
+        $styles = array('list&Slider.css');
+        $scripts = array('slider.js'); 
+        $content = 'views/prof/showcourses.view.php';
+        include 'views/base.view.php';
+    }
+
+
 
     #La fonction qui controlle toutes les actions
     public function action()
@@ -147,6 +199,11 @@ class Controller
             #Student views actions
             case 'StudentInfos': $this->showEtudiantInfosAction();break;
             case'GradesStudent' :$this->showGradesEtudiantAction();break;
+             #Prof views action
+            case 'Showcoursprof' : $this->ShowCourses();break;
+            case 'AllStudent':$this->showAllStudofprof();break;
+            case 'InsertMarks': $this->InsertMark();break;
+            case 'SaveNote': $this->saveMark();break;
 
         }
     }

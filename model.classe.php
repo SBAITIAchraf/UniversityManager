@@ -103,5 +103,50 @@ class Model
         return $result;
     }
 
-}
+
+    public function insertNote($studentLog, $profLog, $note,$cours){
+        try {
+            $query = $this->db->prepare("UPDATE note
+            SET note.note = :note
+            WHERE note.prof = :prof
+              AND note.cours = (SELECT cours.id FROM cours WHERE cours.titre = :courseTitle)
+              AND note.etudiant = :student;");
+    
+            $query->bindParam(':courseTitle', $cours, PDO::PARAM_STR);
+            $query->bindParam(':student', $studentLog, PDO::PARAM_STR);
+            $query->bindParam(':prof', $profLog, PDO::PARAM_STR);
+            $query->bindParam(':note', $note, PDO::PARAM_STR);
+    
+            return $query->execute(); // Retourne true si l'insertion réussit, false sinon
+        } catch (PDOException $e) {
+            // Gérer les erreurs (par exemple, journalisation)
+            error_log("Erreur lors de l'insertion de la note : " . $e->getMessage());
+            return false;
+        }
+    
+    }
+    
+            public function GetcoursesProf($prof){
+                $query = $this->db->prepare(
+                    "SELECT titre FROM cours
+                     WHERE prof = :prof"
+                );
+                $query->bindParam(':prof', $prof, PDO::PARAM_STR);
+                $query->execute();
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+        
+            }
+    
+            public function Studentincourse($cours){
+                $query = $this->db->prepare(
+                    "SELECT etudiant AS login,nom,prenom,photo_profile FROM utilisateur,note AS n,cours AS c WHERE n.cours=c.id AND utilisateur.login=n.etudiant AND c.titre=:cours"
+                );
+                $query->bindParam(':cours', $cours, PDO::PARAM_STR);
+                $query->execute();
+                $result = $query->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+            }
+    
+    }
 ?>

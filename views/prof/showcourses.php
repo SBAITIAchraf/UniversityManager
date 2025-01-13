@@ -1,28 +1,25 @@
 <div class="container">
     <div class="section">
-        <h2>Etudiants</h2>
+        <h2>Courses</h2>
         <div class="slide-container swiper">
             <div class="card-wrapper">
                 <ul class="swiper-wrapper card-list">
                     <?php
-                        foreach ($etudiants as $etudiant) {
+                        foreach ($courses as $course) {
                             echo '<li class="card swiper-slide">
-                                <a href="controller.classe.php?action=InsertMarks&student_log=' . urlencode($etudiant["login"]) . '&course_titre=' . urlencode($cour) . '&prof_log=' . urlencode($log) . '" class="card-link">
+                                <a href="controller.classe.php?action=AllStudent&course_titre=' . urlencode($course["titre"]) . '&prof_log=' . urlencode($log) . '"" class="card-link">
                                     <div class="image-content">
                                         <div class="card-image">
                                             <div class="image-wrapper">';
                                             
-                                            if (isset($etudiant["photo_profile"])) {
-                                                echo '<img src="Imgs/' . $etudiant["photo_profile"] . '" class="card-img">';
-                                            } else {
-                                                echo '<img src="Imgs/profiel_image.png" class="card-img">';
-                                            }
+                                                echo '<img src="Imgs/crs.jpg" class="card-img">';
+                                            
                                             
                             echo '</div>
                                         </div>
                                     </div>  
                                     <div class="card-content">
-                                        <h3 class="nom-full">' . $etudiant['prenom'] . '<span class="nom"> ' . $etudiant['nom'] . '</span></h3>
+                                        <h3 class="nom-full">'. '<span class="nom"> ' . $course['titre'] . '</span></h3>
                                     </div>
                                 </a>
                             </li>';
