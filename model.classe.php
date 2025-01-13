@@ -56,20 +56,16 @@ class Model
 
     /* ajouter fonction d'ajout d'un profil */
     public function AddUser($user){
-        $query=$this->db->prepare("Insert into utilisateur values(?,?,?, NULL)");
-        $query->execute($user);
-    }
-    public function AddAdmin($user){
-        $query=$this->db->prepare("insert into admin values(?,?,?)");
+        $query=$this->db->prepare("Insert into utilisateur values(?,?,?, ?, ?, ?)");
         $query->execute($user);
     }
 
     public function AddStudent($user){
-        $query=$this->db->prepare("insert into etudiant values(?,?,?,?,?,?)");
+        $query=$this->db->prepare("insert into etudiant values(?,?,?,?)");
         $query->execute($user);
     }
     public function AddProfessor($user){
-        $query=$this->db->prepare("insert into professeur values(?,?,?,?) ");
+        $query=$this->db->prepare("insert into professeur values(?,?) ");
         $query->execute($user);
     }
     public function Statut($log,$pass):string{

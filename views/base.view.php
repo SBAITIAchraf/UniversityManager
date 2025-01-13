@@ -7,13 +7,13 @@
 
         <!--Se connecter au fishiers css-->
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
-        <link rel="stylesheet" href="CSS/base.style.css?<?php echo time()?>">
+        <link rel="stylesheet" href="../CSS/base.style.css?<?php echo time()?>">
         <?php
                 if (isset($styles))
                 {
                     foreach($styles as $style)
                     {
-                        echo '<link rel="stylesheet" href="CSS/' .$style .'?'.time() .'">';
+                        echo '<link rel="stylesheet" href="../CSS/' .$style .'?'.time() .'">';
                     }
                 }
             ?>
@@ -23,10 +23,15 @@
     <nav class="nav_bar">
             <a>
                 <div class="logo-container"></div>
-               <img class="logo" src="Imgs/UM6P.jpg">
+               <img class="logo" src="../Imgs/UM6P.jpg">
             </a>
             <div class="nav-tools">
             <ul style="list-style: none;">
+                <li>
+                    <a href="controller.classe.php?action=createAcount">
+                        <button>Créer compte</button>
+                    </a>
+                </li>
                 <li>
                     <a href="controller.classe.php?action=loginSignUp">
                         <button>Sign in</button>
@@ -51,7 +56,7 @@
                             {
                                 foreach($scripts as $script)
                                 {
-                                    echo '<script src="Js/' .$script .'?'.time() .'"></script>';
+                                    echo '<script src="../Js/' .$script .'?'.time() .'"></script>';
                                 }
                             }
             ?>

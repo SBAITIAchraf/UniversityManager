@@ -25,11 +25,8 @@ class Controller
 
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
-        $profil=array($_POST['email'],$_POST['pswd'],$_POST['statut']);
-        $prof=array($_POST['email'],$_POST['nom'],$_POST['prenom'],$_POST['departement']);
-        $admin=array($_POST['email'],$_POST['nom'],$_POST['prenom']);
-        $student=array($_POST['email'],$_POST['nom'],$_POST['prenom'],$_POST['departement'],$_POST['filiere'],$_POST['classe']);
-
+        $hasehedPassword = hash('sha256', $_POST['pswd']);
+        $profil=array($_POST['email'],$hasehedPassword,$_POST['statut'], null, $nom, $prenom);
         $this->m->AddUser($profil);
         $statut=$_POST['statut'];
 
@@ -44,30 +41,31 @@ class Controller
 
         switch ($statut) {
             case 'ADMIN':
-                $this->m->AddAdmin($admin);
                 echo "Administrateur ajouté avec succès.";
                 break;
             case 'PROF':
+                $prof=array($_POST['email'],$_POST['departement']);
                 $this->m->AddProfessor($prof);
                 echo "Professeur ajouté avec succes";
                 break;
 
             case 'STUD':
+                $student=array($_POST['email'],$_POST['departement'],$_POST['filiere'],$_POST['classe']);
                 $this->m->AddStudent($student);
                 $message = "Étudiant ajouté avec succès.";
                 break;
     }
 
-            header('location:controller.classe.php');
+    header('location: controller.classe.php?action=showAllProfiles');
 }
 
 
     public function showProfiles(){
-
-        $profil=array($_POST['email'],$_POST['pswd']);
+        $hasehedPassword = hash('sha256',$_POST['pswd']);
+        $profil=array($_POST['email'],$hasehedPassword);
         $log=$_POST['email'];
-        $pass=$_POST['pswd'];
-        $stat=$this->m->Statut($log,$pass);
+        echo $hasehedPassword;
+        $stat=$this->m->Statut($log,$hasehedPassword);
         switch($stat){
 
             /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
@@ -91,9 +89,14 @@ class Controller
         $admins = $this->m->getUsers('ALL', array("type" => "'ADMIN'"));
         
         $styles = array('list&Slider.css');
-        $scripts = array('slider.js');  
+        $scripts = array('slider.js');
         $content = 'views/admin/showAllProfiles.view.php';
         include 'views/base.view.php';
+    }
+
+    public function createAcountAction()
+    {
+        include 'views/admin/createacount.view.php';
     }
 
     public function showAllOfType()
@@ -131,15 +134,16 @@ class Controller
         }
         switch( $action )
         {
-            case 'home': $this->homeAction(); break;
+            case 'home': $this->loginSignUpAction(); break;
             case 'loginSignUp': $this->loginSignUpAction(); break;
-            case 'Addprofil':$this->AddUserAction();break;
+            case 'AddUser':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
             
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;
             case 'showAllOfType': $this->showAllOfType(); break;
-            
+            case 'createAcount': $this->createAcountAction();break;
+
             #Student views actions
             case 'StudentInfos': $this->showEtudiantInfosAction();break;
             case'GradesStudent' :$this->showGradesEtudiantAction();break;

@@ -8,18 +8,18 @@
                             foreach($etudiants as $etudiant)
                             {
                                 echo '<li class="card swiper-slide">
-                            <a href="" class="card-link">
+                            <a href="controller.classe.php?action=StudentInfos&log=' .$etudiant["login"] .'" class="card-link">
                                 <div class="image-content">
                                     <div class="card-image">
                                         <div class="image-wrapper">';
 
                                         if (isset($etudiant["photo_profile"]))
                                         {
-                                            echo '<img src="Imgs/' .$etudiant["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="../Imgs/' .$etudiant["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>
@@ -64,11 +64,11 @@
 
                                         if (isset($professeur["photo_profile"]))
                                         {
-                                            echo '<img src="Imgs/' .$professeur["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="../Imgs/' .$professeur["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>
@@ -113,11 +113,11 @@
 
                                         if (isset($admin["photo_profile"]))
                                         {
-                                            echo '<img src="Imgs/' .$admin["photo_profile"] .'" class="card-img">';
+                                            echo '<img src="../Imgs/' .$admin["photo_profile"] .'" class="card-img">';
                                         }
                                         else
                                         {
-                                            echo '<img src="Imgs/profiel_image.png" class="card-img">';
+                                            echo '<img src="../Imgs/profiel_image.png" class="card-img">';
                                         }
                                 
                                 echo   '</div>

@@ -7,11 +7,11 @@
     $classe = $result['classe'];
     if ($result['photo_profile'])
     {
-        $im="Imgs/" .$result['photo_profile'];
+        $im="../Imgs/" .$result['photo_profile'];
     }
     else
     {
-        $im="Imgs/profiel_image.png";
+        $im="../Imgs/profiel_image.png";
     }
 }
 ?>
