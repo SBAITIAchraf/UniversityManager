@@ -1,4 +1,28 @@
+<?php
+session_start();
 
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: controller.classe.php?action=loginSignUp");
+}
+if (in_array($_SESSION['statut'], $st)|| $_SESSION['statut']=='ADMIN')
+{
+if (isset($_SESSION['last_activity']) && isset($_SESSION['expire_time'])) {
+    $inactive_time = time() - $_SESSION['last_activity'];
+
+    if ($inactive_time > $_SESSION['expire_time']) {
+        session_unset();
+        session_destroy();
+        header("Location: controller.classe.php?action=loginSignUp");
+    } else {
+        $_SESSION['last_activity'] = time();
+    }
+}
+}
+else
+{
+    header("Location: controller.classe.php?action=loginSignUp");
+}
+?>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +45,7 @@
     </head>
     <body>
     <nav class="nav_bar">
-            <a>
+            <a href="controller.classe.php">
                 <div class="logo-container"></div>
                <img class="logo" src="../Imgs/UM6P.jpg">
             </a>

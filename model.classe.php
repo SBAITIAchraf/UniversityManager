@@ -18,15 +18,16 @@ class Model
         }
         elseif ($type == "STUD")
         {
-            $table = "etudiant";
+            $table = "etudiantfullinfo";
         }
         elseif ($type == "PROF")
         {
-            $table = "professeur";
+            $table = "professeurfullinfo";
         }
         elseif ($type == "ADMIN")
         {
-            $table = "admin";
+            $table = "utilisateur";
+            $filter = ['type' => "'ADMIN'"];
         }
         if ($filter == null)
         {
@@ -49,7 +50,6 @@ class Model
             }
 
             $query = "select * from " .$table ." where " .$query_filter;
-            
             return $this->db->query($query, PDO::FETCH_ASSOC);
         }
     }
@@ -103,6 +103,22 @@ class Model
         return $result;
     }
 
+    public function GetInfoProf($stud){
+
+        $query=$this->db->prepare("SELECT * FROM professeurfullinfo where login= :login");
+        $query->bindParam(':login',$stud,PDO::PARAM_STR );
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
+    public function GetInfoAdmin($stud){
+
+        $query=$this->db->prepare("SELECT * FROM utilisateur where login= :login");
+        $query->bindParam(':login',$stud,PDO::PARAM_STR );
+        $query->execute();
+        $result = $query->fetch(PDO::FETCH_ASSOC);
+        return $result;
+    }
 
     public function insertNote($studentLog, $profLog, $note,$cours){
         try {

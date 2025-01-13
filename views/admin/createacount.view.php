@@ -1,3 +1,28 @@
+<?php
+session_start();
+
+if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+    header("Location: controller.classe.php?action=loginSignUp");
+}
+if (in_array($_SESSION['statut'], $st))
+{
+if (isset($_SESSION['last_activity']) && isset($_SESSION['expire_time'])) {
+    $inactive_time = time() - $_SESSION['last_activity'];
+
+    if ($inactive_time > $_SESSION['expire_time']) {
+        session_unset();
+        session_destroy();
+        header("Location: controller.classe.php?action=loginSignUp");
+    } else {
+        $_SESSION['last_activity'] = time();
+    }
+}
+}
+else
+{
+    header("Location: controller.classe.php?action=loginSignUp");
+}
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,6 +50,7 @@
                    <input type="text" name="prenom" placeholder="Prénom">
                    <input type="email" name="email" placeholder="Email" required="">
                    <input type="password" name="pswd" placeholder="Password" required="">
+                   <input type="file" name="photo" placeholder="Photo de profil">
 
              
                    <select id="status" name="statut" required="">
@@ -43,7 +69,6 @@
 
                    <div id="professorFields" class="extra-fields">
                        <input type="text" name="departement" placeholder="Département">
-                       <input type="file" name="photo" accept="image/*" placeholder="Photo de profil">
                    </div>
 
                    <button>Sign up</button>

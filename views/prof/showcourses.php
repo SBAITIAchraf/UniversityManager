@@ -12,7 +12,7 @@
                                         <div class="card-image">
                                             <div class="image-wrapper">';
                                             
-                                                echo '<img src="Imgs/crs.jpg" class="card-img">';
+                                                echo '<img src="../Imgs/crs.jpg" class="card-img">';
                                             
                                             
                             echo '</div>

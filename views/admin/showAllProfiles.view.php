@@ -35,7 +35,7 @@
                         ?>
                         <li class="card swiper-slide">
                             
-                            <a>
+                            <a href="controller.classe.php?action=showAllOfType&type=STUD">
                             <button>Voir plus</button>
                             </a>
                         </li>
@@ -57,7 +57,7 @@
                             foreach($professeurs as $professeur)
                             {
                                 echo '<li class="card swiper-slide">
-                            <a href="" class="card-link">
+                            <a href="controller.classe.php?action=showProfInfos&log=' .$professeur["login"] .'" class="card-link">
                                 <div class="image-content">
                                     <div class="card-image">
                                         <div class="image-wrapper">';
@@ -84,7 +84,7 @@
                         ?>
                         <li class="card swiper-slide">
                             
-                            <a>
+                        <a href="controller.classe.php?action=showAllOfType&type=PROF">
                             <button>Voir plus</button>
                             </a>
                         </li>
@@ -106,7 +106,7 @@
                             foreach($admins as $admin)
                             {
                                 echo '<li class="card swiper-slide">
-                            <a href="" class="card-link">
+                            <a href="controller.classe.php?action=showAdminInfos&log=' .$admin["login"] .'" class="card-link">
                                 <div class="image-content">
                                     <div class="card-image">
                                         <div class="image-wrapper">';
@@ -132,7 +132,7 @@
                             }
                         ?>
                         <li class="card swiper-slide">
-                            <a>
+                        <a href="controller.classe.php?action=showAllOfType&type=ADMIN">
                             <button>Voir plus</button>
                             </a>
                         </li>

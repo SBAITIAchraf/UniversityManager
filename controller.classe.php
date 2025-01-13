@@ -12,6 +12,7 @@ class Controller
     #l'action qui renvoie vers la page home
     public function homeAction()
     {
+        if (isset($_SESSION))
         include 'views/base.view.php';
     }
 
@@ -22,23 +23,69 @@ class Controller
     }
 
     public function AddUserAction(){
-
+        $st = ['ADMIN'];
         $nom = $_POST['nom'];
         $prenom = $_POST['prenom'];
+        $log = $_POST['email'];
+
         $hasehedPassword = hash('sha256', $_POST['pswd']);
-        $profil=array($_POST['email'],$hasehedPassword,$_POST['statut'], null, $nom, $prenom);
-        $this->m->AddUser($profil);
         $statut=$_POST['statut'];
 
-        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+        
+        if (isset($_FILES['photo'])) {
+            $targetDir = "Imgs/";
             $fileTmpPath = $_FILES['photo']['tmp_name'];
+            $filePath = $_FILES['photo']['name'];
             $fileType = $_FILES['photo']['type'];
-            $newFileName = $nom . '_' . $prenom . '.jpg';
+            $newFileName = $log . '.jpg';
             $uploadFileDir = __DIR__ . '/Imgs/';
-            $destPath = $uploadFileDir . $newFileName;
+            $destPath = $targetDir . basename($_FILES['photo']['name']);
 
+            $uploadOk = 1;
+        $imageFileType = strtolower(pathinfo($destPath, PATHINFO_EXTENSION));
+
+        // Check if file is an image
+        $check = getimagesize($_FILES["photo"]["tmp_name"]);
+        if ($check !== false) {
+            echo "File is an image - " . $check["mime"] . ".<br>";
+        } else {
+            echo "File is not an image.<br>";
+            $uploadOk = 0;
         }
 
+        // Check file size
+        if ($_FILES["image"]["size"] > 5000000) {
+            echo "Sorry, your file is too large.<br>";
+            $uploadOk = 0;
+        }
+
+        // Check allowed file formats
+        if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
+            echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed.<br>";
+            $uploadOk = 0;
+        }
+
+        // Attempt to upload file
+        if ($uploadOk == 1) {
+            if (move_uploaded_file($fileTmpPath, $destPath))
+            {
+                echo "The file has been uploaded.";
+            }
+            else {
+                echo "Sorry, there was an error uploading your file.<br>";
+            }
+        } 
+        else {
+            echo "Your file was not uploaded due to errors.<br>";
+        }
+
+            
+        }
+        $photoName = null;
+        if (isset($newFileName)) $photoName = $newFileName;
+        $profil=array($_POST['email'],$hasehedPassword,$_POST['statut'], $photoName, $nom, $prenom);
+        $this->m->AddUser($profil);
+        
         switch ($statut) {
             case 'ADMIN':
                 echo "Administrateur ajouté avec succès.";
@@ -66,6 +113,15 @@ class Controller
         $log=$_POST['email'];
         echo $hasehedPassword;
         $stat=$this->m->Statut($log,$hasehedPassword);
+
+        session_start();
+        $_SESSION['logged_in'] = true;
+        $_SESSION['login'] = $log;
+        $_SESSION['statut'] = $stat;
+
+        $_SESSION['last_activity'] = time();
+        $_SESSION['expire_time'] = 1800;
+
         switch($stat){
 
             /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
@@ -77,13 +133,15 @@ class Controller
                     /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
                 break;
             case 'PROF':
-                 /**/
+                header('location: controller.classe.php?action=Showcoursprof&log=' .$log);
+                break;
         }
     }
 
     # Admin actions
     public function showAllProfilesAction()
     {
+        $st = ['ADMIN'];
         $etudiants = $this->m->getUsers('ALL', array("type" => "'STUD'"));
         $professeurs = $this->m->getUsers('ALL', array("type" => "'PROF'"));
         $admins = $this->m->getUsers('ALL', array("type" => "'ADMIN'"));
@@ -96,11 +154,15 @@ class Controller
 
     public function createAcountAction()
     {
+        $st = ['ADMIN'];
         include 'views/admin/createacount.view.php';
     }
 
     public function showAllOfType()
     {
+        $st = ['ADMIN'];
+        $type = $_GET['type'];
+        $users = $this->m->getUsers($type);
         $styles = array('list&Slider.css');
         $content = 'views/admin/showAllOfType.view.php';
         include 'views/base.view.php';
@@ -109,6 +171,7 @@ class Controller
     #Student actions
     public function showEtudiantInfosAction()
     {
+        $st = ['STUD'];
         $log = $_GET["log"];
         $result=$this->m->GetInfoStudent($log);
         $styles = array('StyleInfos.css');
@@ -116,6 +179,7 @@ class Controller
         include 'views/base.view.php';
     }
     public function showGradesEtudiantAction(){
+        $st = ['STUD'];
         $var1 = $_GET['var1'];
         $result=$this->m->GetNoteStudent($var1);
         $styles=array('styletable.css');
@@ -123,8 +187,28 @@ class Controller
         include 'views/base.view.php';
     }
 
-    public function showAllStudofprof(){
+    
+    public function showProfInfosAction()
+    {
+        $st = ['ADMIN'];
+        $log = $_GET["log"];
+        $result=$this->m->GetInfoProf($log);
+        $styles = array('StyleInfos.css');
+        $content='views/admin/showInfoProf.php';
+        include 'views/base.view.php';
+    }
 
+    public function showAdminInfosAction()
+    {
+        $st = ['ADMIN'];
+        $log = $_GET["log"];
+        $result=$this->m->GetInfoAdmin($log);
+        $styles = array('StyleInfos.css');
+        $content='views/admin/showInfoAdmin.php';
+        include 'views/base.view.php';
+    }
+    public function showAllStudofprof(){
+        $st = ['PROF'];
         $log = $_GET['prof_log'];
         $cour= $_GET['course_titre'];
         $etudiants=$this->m->Studentincourse($cour);
@@ -138,6 +222,7 @@ class Controller
 
 
     public function InsertMark(){
+        $st = ['PROF'];
         $prof =$_GET['prof_log'];
         $course = $_GET['course_titre'];
         $etudiant=$_GET['student_log'];
@@ -148,7 +233,7 @@ class Controller
     }
 
     public function saveMark(){
-    
+    $st = ['PROF'];
     $studentLog = $_POST['student_log']; 
     $profLog = $_POST['prof_log'];           
     $note = $_POST['note'];  
@@ -165,12 +250,12 @@ class Controller
     }
 
     public function ShowCourses(){
-
+        $st = ['PROF'];
         $log=$_GET['log'];
         $courses=$this->m->GetcoursesProf($log);
         $styles = array('list&Slider.css');
         $scripts = array('slider.js'); 
-        $content = 'views/prof/showcourses.view.php';
+        $content = 'views/prof/showcourses.php';
         include 'views/base.view.php';
     }
 
@@ -195,6 +280,8 @@ class Controller
             case 'showAllProfiles': $this->showAllProfilesAction(); break;
             case 'showAllOfType': $this->showAllOfType(); break;
             case 'createAcount': $this->createAcountAction();break;
+            case 'showProfInfos': $this->showProfInfosAction();break;
+            case 'showAdminInfos': $this->showAdminInfosAction();break;
 
             #Student views actions
             case 'StudentInfos': $this->showEtudiantInfosAction();break;
