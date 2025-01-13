@@ -64,7 +64,6 @@ else
                    <div id="studentFields" class="extra-fields">
                        <input type="text" name="filiere" placeholder="Filière">
                        <input type="text" name="classe" placeholder="Classe">
-                       <input type="file" name="photo" accept="image/*" placeholder="Photo de profil">
                    </div>
 
                    <div id="professorFields" class="extra-fields">

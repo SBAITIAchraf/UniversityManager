@@ -35,49 +35,10 @@ class Controller
         if (isset($_FILES['photo'])) {
             $targetDir = "Imgs/";
             $fileTmpPath = $_FILES['photo']['tmp_name'];
-            $filePath = $_FILES['photo']['name'];
-            $fileType = $_FILES['photo']['type'];
-            $newFileName = $log . '.jpg';
-            $uploadFileDir = __DIR__ . '/Imgs/';
-            $destPath = $targetDir . basename($_FILES['photo']['name']);
+            $newFileName = $log . '.' . strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
+            $destPath = $targetDir . $newFileName;
 
-            $uploadOk = 1;
-        $imageFileType = strtolower(pathinfo($destPath, PATHINFO_EXTENSION));
-
-        // Check if file is an image
-        $check = getimagesize($_FILES["photo"]["tmp_name"]);
-        if ($check !== false) {
-            echo "File is an image - " . $check["mime"] . ".<br>";
-        } else {
-            echo "File is not an image.<br>";
-            $uploadOk = 0;
-        }
-
-        // Check file size
-        if ($_FILES["image"]["size"] > 5000000) {
-            echo "Sorry, your file is too large.<br>";
-            $uploadOk = 0;
-        }
-
-        // Check allowed file formats
-        if (!in_array($imageFileType, ['jpg', 'jpeg', 'png', 'gif'])) {
-            echo "Sorry, only JPG, JPEG, PNG, and GIF files are allowed.<br>";
-            $uploadOk = 0;
-        }
-
-        // Attempt to upload file
-        if ($uploadOk == 1) {
-            if (move_uploaded_file($fileTmpPath, $destPath))
-            {
-                echo "The file has been uploaded.";
-            }
-            else {
-                echo "Sorry, there was an error uploading your file.<br>";
-            }
-        } 
-        else {
-            echo "Your file was not uploaded due to errors.<br>";
-        }
+            move_uploaded_file($fileTmpPath, $destPath);
 
             
         }
