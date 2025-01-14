@@ -12,14 +12,42 @@ class Controller
     #l'action qui renvoie vers la page home
     public function homeAction()
     {
-        if (isset($_SESSION))
-        include 'views/base.view.php';
+        session_start();
+        if (isset($_SESSION['logged_in']) && $_SESSION['logged_in'] == true)
+        {
+            switch($_SESSION['statut']){
+
+                /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
+                case 'ADMIN':
+                    header('location: controller.classe.php?action=showAllProfiles');
+                    break;            
+                case 'STUD':
+                    header('location: controller.classe.php?action=StudentInfos&log=' .$_SESSION['login']);
+                        /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+                    break;
+                case 'PROF':
+                    header('location: controller.classe.php?action=Showcoursprof&log=' .$_SESSION['login']);
+                    break;
+            }
+        }
+        else
+        {
+            header("Location: controller.classe.php?action=loginSignUp");
+        }
     }
 
     #L'action de login et sign-up
     public function loginSignUpAction()
     {
         include 'views/login.signup.view.php';
+    }
+
+    public function logoutAction()
+    {
+        session_start();
+        $_SESSION = array();
+        session_destroy();
+        header("Location: controller.classe.php?action=loginSignUp");
     }
 
     public function AddUserAction(){
@@ -232,8 +260,9 @@ class Controller
         }
         switch( $action )
         {
-            case 'home': $this->loginSignUpAction(); break;
+            case 'home': $this->homeAction(); break;
             case 'loginSignUp': $this->loginSignUpAction(); break;
+            case 'logout': $this->logoutAction();break;
             case 'AddUser':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
             

@@ -51,14 +51,19 @@ else
             </a>
             <div class="nav-tools">
             <ul style="list-style: none;">
-                <li>
+                <?php 
+                if ($_SESSION['statut'] == 'ADMIN')
+                {
+                    echo '<li>
                     <a href="controller.classe.php?action=createAcount">
                         <button>Créer compte</button>
                     </a>
-                </li>
+                </li>';
+                }
+                ?>
                 <li>
-                    <a href="controller.classe.php?action=loginSignUp">
-                        <button>Sign in</button>
+                    <a href="controller.classe.php?action=logout">
+                        <button>Logout</button>
                     </a>
                 </li>
             </ul>
