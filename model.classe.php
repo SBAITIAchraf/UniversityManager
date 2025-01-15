@@ -68,6 +68,13 @@ class Model
         $query=$this->db->prepare("insert into professeur values(?,?) ");
         $query->execute($user);
     }
+
+    public function ChangePassword($log, $password)
+    {
+        $query = "UPDATE utilisateur SET password='" .$password ."' WHERE login='" .$log ."'";
+        $this->db->query($query);
+    }
+
     public function Statut($log,$pass):string{
 
         $query = $this->db->prepare("SELECT type FROM utilisateur WHERE login = :login AND password = :password");
@@ -75,6 +82,7 @@ class Model
         $query->bindParam(':password', $pass, PDO::PARAM_STR);
         $query->execute();
         $type = $query->fetch();
+        if (!$type) return false;
         return $type[0];
     }
 

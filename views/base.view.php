@@ -66,6 +66,11 @@ else
                         <button>Logout</button>
                     </a>
                 </li>
+                <li>
+                    <a href="controller.classe.php?action=resetPasswordForm">
+                        <button>Reset Password</button>
+                    </a>
+                </li>
             </ul>
             </div>
         </nav>

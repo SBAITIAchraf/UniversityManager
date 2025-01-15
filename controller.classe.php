@@ -39,6 +39,7 @@ class Controller
     #L'action de login et sign-up
     public function loginSignUpAction()
     {
+        if (isset($_GET['warning'])) $warning = $_GET['warning'];
         include 'views/login.signup.view.php';
     }
 
@@ -48,6 +49,32 @@ class Controller
         $_SESSION = array();
         session_destroy();
         header("Location: controller.classe.php?action=loginSignUp");
+    }
+
+    public function resetPassworFormAction()
+    {
+        if (isset($_GET['warning'])) $warning = $_GET['warning'];
+        include 'views/reset.password.php';
+    }
+    public function resetPassworAction()
+    {
+        session_start();
+        $pswrd1 = $_POST["pswd1"];
+        $pswrd2 = $_POST["pswd2"];
+        if ($pswrd1 != $pswrd2)
+        {
+            $warning = "Passwords don't match eachother!";
+            header("Location: controller.classe.php?action=resetPasswordForm&warning=" .$warning);
+        }
+        else
+        {
+            $log = $_SESSION['login'];
+            $hasehedPassword = hash('sha256',  $pswrd1);
+            $this->m->ChangePassword($log, $hasehedPassword);
+            $warning = "Password rest successfully";
+            header("Location: controller.classe.php?action=loginSignUp&warning=" .$warning);
+
+        }
     }
 
     public function AddUserAction(){
@@ -100,30 +127,36 @@ class Controller
         $hasehedPassword = hash('sha256',$_POST['pswd']);
         $profil=array($_POST['email'],$hasehedPassword);
         $log=$_POST['email'];
-        echo $hasehedPassword;
         $stat=$this->m->Statut($log,$hasehedPassword);
+        if ($stat == false)
+        {
+            $warning = "Password or Email incorrect!";
+            header("Location: controller.classe.php?action=loginSignUp&warning=" .$warning);
+        }
+        else
+        {
+            session_start();
+            $_SESSION['logged_in'] = true;
+            $_SESSION['login'] = $log;
+            $_SESSION['statut'] = $stat;
 
-        session_start();
-        $_SESSION['logged_in'] = true;
-        $_SESSION['login'] = $log;
-        $_SESSION['statut'] = $stat;
+            $_SESSION['last_activity'] = time();
+            $_SESSION['expire_time'] = 1800;
 
-        $_SESSION['last_activity'] = time();
-        $_SESSION['expire_time'] = 1800;
+            switch($stat){
 
-        switch($stat){
-
-            /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
-            case 'ADMIN':
-                header('location: controller.classe.php?action=showAllProfiles');
-                break;            
-            case 'STUD':
-                header('location: controller.classe.php?action=StudentInfos&log=' .$log);
-                    /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
-                break;
-            case 'PROF':
-                header('location: controller.classe.php?action=Showcoursprof&log=' .$log);
-                break;
+                /*On va faire une redirection vers une vue d'affichage selon chaque profil*/
+                case 'ADMIN':
+                    header('location: controller.classe.php?action=showAllProfiles');
+                    break;            
+                case 'STUD':
+                    header('location: controller.classe.php?action=StudentInfos&log=' .$log);
+                        /* A partir de showInfo il va etre redirigee vers soit showNotes soit Show Test selon ce qu'il va choisir */
+                    break;
+                case 'PROF':
+                    header('location: controller.classe.php?action=Showcoursprof&log=' .$log);
+                    break;
+            }
         }
     }
 
@@ -265,7 +298,9 @@ class Controller
             case 'logout': $this->logoutAction();break;
             case 'AddUser':$this->AddUserAction();break;
             case 'show':$this->showProfiles();break;
-            
+            case 'resetPassword':$this->resetPassworAction();break;
+            case 'resetPasswordForm':$this->resetPassworFormAction();break;
+
             #Admin views action
             case 'showAllProfiles': $this->showAllProfilesAction(); break;
             case 'showAllOfType': $this->showAllOfType(); break;

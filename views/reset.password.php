@@ -20,12 +20,12 @@
            <input type="checkbox" id="chk" aria-hidden="true">
 
            <div class="signup">
-               <form   action="controller.classe.php?action=show"  method="POST" >
-                   <label for="chk" aria-hidden="true">Login</label>
+               <form   action="controller.classe.php?action=resetPassword"  method="POST" >
+                   <label for="chk" aria-hidden="true">Reset Password</label>
                    <div><?php if (isset($warning)) echo $warning;?></div>
-                   <input type="email" name="email" placeholder="Email" required="">
-                   <input type="password" name="pswd" placeholder="Password" required="">
-                   <button>Login</button>
+                   <input type="password" name="pswd1" placeholder="New password" required="">
+                   <input type="password" name="pswd2" placeholder="Retype new password" required="">
+                   <button>Reset</button>
                </form>
            </div>
        </div>
