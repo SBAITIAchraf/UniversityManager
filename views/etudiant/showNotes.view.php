@@ -36,7 +36,7 @@
                         }
                         elseif($row['note']<10){
                             echo '<td>
-                            <p class="status cancelled">Validé</p>
+                            <p class="status cancelled">Non Validé</p>
                         </td>
                         </tr>';
                         }

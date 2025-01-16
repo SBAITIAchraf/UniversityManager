@@ -7,7 +7,7 @@
                     <?php
                         foreach ($courses as $course) {
                             echo '<li class="card swiper-slide">
-                                <a href="controller.classe.php?action=AllStudent&course_titre=' . urlencode($course["titre"]) . '&prof_log=' . urlencode($log) . '"" class="card-link">
+                                <a href="controller.classe.php?action=AllStudent&course_titre=' . urlencode($course["titre"]) . "&course_id=" .urlencode($course["id"]) . '&prof_log=' . urlencode($log) . '"" class="card-link">
                                     <div class="image-content">
                                         <div class="card-image">
                                             <div class="image-wrapper">';

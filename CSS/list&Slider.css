@@ -6,6 +6,16 @@
     border-radius: 25px;
     padding: 20px 15px;
 }
+.long 
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.long button
+{
+    border-radius: 0;
+}
 .slide-container
 {
     padding: 30px 50px;

@@ -29,7 +29,7 @@ else
 
        <meta charset="utf-8">
        <title>UnivManager</title>
-       <link rel="stylesheet" type="text/css" href="../CSS/style1.css">
+       <link rel="stylesheet" type="text/css" href="../CSS/style1.css?<?php echo time()?>">
        <link href="https://fonts.googleapis.com/css2?family=Jost:wght@500&display=swap" rel="stylesheet">
        <style>
            .extra-fields {
@@ -45,11 +45,12 @@ else
 
            <div class="signup">
                 <form id="signupForm" action="controller.classe.php?action=AddUser"  method="POST" enctype="multipart/form-data">
-                   <label for="chk" aria-hidden="true">Créer compte</label>
+                   <label for="chk" aria-hidden="true"><a href="controller.classe.php?action=home">Créer compte</a></label>
+                   <div><?php if (isset($warning)) echo $warning;?></div>
                    <input type="text" name="nom" placeholder="Nom">
-                   <input type="text" name="prenom" placeholder="Prénom">
-                   <input type="email" name="email" placeholder="Email" required="">
-                   <input type="password" name="pswd" placeholder="Password" required="">
+                   <input type="text" name="prenom" placeholder="Prénom" >
+                   <input type="email" name="email" placeholder="Email" required="" >
+                   <input type="password" name="pswd" placeholder="Password" required="" >
                    <input type="file" name="photo" placeholder="Photo de profil">
 
              
@@ -70,7 +71,7 @@ else
                        <input type="text" name="departement" placeholder="Département">
                    </div>
 
-                   <button>Sign up</button>
+                   <button>Créer</button>
                </form>
            </div>
            

@@ -55,9 +55,17 @@ class Model
     }
 
     /* ajouter fonction d'ajout d'un profil */
-    public function AddUser($user){
+    public function AddUser($user): bool{
         $query=$this->db->prepare("Insert into utilisateur values(?,?,?, ?, ?, ?)");
-        $query->execute($user);
+        try
+        {
+            $query->execute($user);
+            return true;
+        }
+        catch (PDOException $e)
+        {
+            return false;
+        }
     }
 
     public function AddStudent($user){
@@ -152,7 +160,7 @@ class Model
     
             public function GetcoursesProf($prof){
                 $query = $this->db->prepare(
-                    "SELECT titre FROM cours
+                    "SELECT id, titre FROM cours
                      WHERE prof = :prof"
                 );
                 $query->bindParam(':prof', $prof, PDO::PARAM_STR);
@@ -161,7 +169,20 @@ class Model
                 return $result;
         
             }
-    
+            
+            public function creerNote($prof, $etudiant, $cours_id)
+            {
+                $query = "INSERT INTO note(prof, etudiant, cours) VALUES ('" .$prof ."','" .$etudiant ."'," .$cours_id .")";
+                try
+                {
+                $this->db->query($query);
+            }
+                catch (PDOException $e)
+                {
+                    echo "Etudiant exist déja dans le cours";
+                }
+            }
+
             public function Studentincourse($cours){
                 $query = $this->db->prepare(
                     "SELECT etudiant AS login,nom,prenom,photo_profile FROM utilisateur,note AS n,cours AS c WHERE n.cours=c.id AND utilisateur.login=n.etudiant AND c.titre=:cours"

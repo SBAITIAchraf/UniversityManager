@@ -1,6 +1,9 @@
 <div class="container">
     <div class="section">
-        <h2>Etudiants</h2>
+        <div class="long">
+            <h2>Etudiants</h2>
+            <a href=<?php echo "controller.classe.php?action=ShowAllStudents&cours_id=" . $cour_id ."&prof=" .$log. '&course_titre=' . urlencode($cour)?> ><button>Ajouter Etudiant</button></a>
+        </div>
         <div class="slide-container swiper">
             <div class="card-wrapper">
                 <ul class="swiper-wrapper card-list">
@@ -13,9 +16,9 @@
                                             <div class="image-wrapper">';
                                             
                                             if (isset($etudiant["photo_profile"])) {
-                                                echo '<img src="Imgs/' . $etudiant["photo_profile"] . '" class="card-img">';
+                                                echo '<img src="../Imgs/' . $etudiant["photo_profile"] . '" class="card-img">';
                                             } else {
-                                                echo '<img src="Imgs/profiel_image.png" class="card-img">';
+                                                echo '<img src="../Imgs/profiel_image.png" class="card-img">';
                                             }
                                             
                             echo '</div>

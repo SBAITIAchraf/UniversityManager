@@ -85,23 +85,25 @@ class Controller
 
         $hasehedPassword = hash('sha256', $_POST['pswd']);
         $statut=$_POST['statut'];
+        $photoName = null;
 
         
-        if (isset($_FILES['photo'])) {
+        if (isset($_FILES['photo'])and $_FILES['photo']['name'] != '') {
             $targetDir = "Imgs/";
             $fileTmpPath = $_FILES['photo']['tmp_name'];
             $newFileName = $log . '.' . strtolower(pathinfo($_FILES['photo']['name'], PATHINFO_EXTENSION));
             $destPath = $targetDir . $newFileName;
 
             move_uploaded_file($fileTmpPath, $destPath);
-
+            if (isset($newFileName)) $photoName = $newFileName;
+            
             
         }
-        $photoName = null;
-        if (isset($newFileName)) $photoName = $newFileName;
-        $profil=array($_POST['email'],$hasehedPassword,$_POST['statut'], $photoName, $nom, $prenom);
-        $this->m->AddUser($profil);
         
+        $profil=array($_POST['email'],$hasehedPassword,$_POST['statut'], $photoName, $nom, $prenom);
+        $add = $this->m->AddUser($profil);
+        if ($add ==true)
+        {
         switch ($statut) {
             case 'ADMIN':
                 echo "Administrateur ajouté avec succès.";
@@ -120,6 +122,12 @@ class Controller
     }
 
     header('location: controller.classe.php?action=showAllProfiles');
+}
+        else
+        {
+            $warning = "Email est déja pris";
+            header("Location: controller.classe.php?action=createAcount&warning=" .$warning);
+        }
 }
 
 
@@ -177,6 +185,7 @@ class Controller
     public function createAcountAction()
     {
         $st = ['ADMIN'];
+        if (isset($_GET['warning'])) $warning = $_GET['warning'];
         include 'views/admin/createacount.view.php';
     }
 
@@ -229,10 +238,11 @@ class Controller
         $content='views/admin/showInfoAdmin.php';
         include 'views/base.view.php';
     }
-    public function showAllStudofprof(){
+    public function showAllStudofprof() {
         $st = ['PROF'];
         $log = $_GET['prof_log'];
         $cour= $_GET['course_titre'];
+        $cour_id = $_GET['course_id'];
         $etudiants=$this->m->Studentincourse($cour);
         $styles = array('list&Slider.css');
         $scripts = array('slider.js');  
@@ -282,6 +292,27 @@ class Controller
     }
 
 
+    public function showAllStuds()
+    {
+        $st = ['PROF'];
+        $log = $_GET['prof'];
+        $cours_id = $_GET['cours_id'];
+        $cours_titre = $_GET['course_titre'];
+        $etudiants = $this->m->getUsers('STUD');
+        $styles = array('list&Slider.css');
+        $content = 'views/prof/showAllStudents.php';
+        include 'views/base.view.php';
+    }
+
+    public function initialiserNoteAction()
+    {
+        $prof = $_GET['prof'];
+        $etudiant = $_GET['etudiant'];
+        $cours_id = $_GET['cours_id'];
+        $cours_titre = $_GET['cours_titre'];
+        $this->m->creerNote($prof, $etudiant, $cours_id);
+        header("Location: controller.classe.php?action=AllStudent&prof_log=" . urlencode($prof) . "&course_titre=" . urlencode($cours_titre). "&course_id=" .urlencode($cours_id) . "&success=1");
+    }
 
     #La fonction qui controlle toutes les actions
     public function action()
@@ -316,6 +347,8 @@ class Controller
             case 'AllStudent':$this->showAllStudofprof();break;
             case 'InsertMarks': $this->InsertMark();break;
             case 'SaveNote': $this->saveMark();break;
+            case 'ShowAllStudents': $this->showAllStuds();break;
+            case 'initialiser': $this->initialiserNoteAction();break;
 
         }
     }
